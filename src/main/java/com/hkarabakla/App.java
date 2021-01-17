@@ -1,9 +1,23 @@
 package com.hkarabakla;
 
-public class App 
+import com.hkarabakla.services.CategoryService;
+import com.hkarabakla.services.UserService;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("com.hkarabakla");
+        appContext.refresh();
+
+        UserService userService = (UserService) appContext.getBean("userService");
+        userService.userOperations();
+
+        CategoryService categoryService = (CategoryService) appContext.getBean("categoryService");
+        categoryService.categoryOperations();
+
+        appContext.close();
     }
 }
